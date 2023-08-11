@@ -31,6 +31,7 @@ import {
   MediaQuery,
   Burger,
   Table,
+  Button,
 } from "@mantine/core";
 import { RichTextEditor } from "@mantine/tiptap";
 import { useEditor } from "@tiptap/react";
@@ -61,6 +62,7 @@ import { useRef } from "react";
 import { Prism } from "@mantine/prism";
 // @ts-ignore
 import { themes } from "prism-react-renderer";
+import { useDisclosure } from "@mantine/hooks";
 
 lowlight.registerLanguage("js", jsLanguageSyntax);
 
@@ -136,6 +138,7 @@ const App = () => {
             <Navbar
               p="xs"
               hiddenBreakpoint="md"
+              className="flex justify-between"
               hidden={!opened}
               width={{
                 md: 260,
@@ -143,6 +146,33 @@ const App = () => {
               }}
             >
               {navLinkItems}
+
+              <Card className="bg-gray-800 " shadow={"lg"}>
+                <div className="flex flex-col gap-4">
+                  <Text>
+                    Open this page in multiple windows or share the URL with
+                    your team to experience the demo.
+                  </Text>
+                  <Button
+                    className="!bg-white !text-black"
+                    onClick={() => {
+                      window.open(window.location.href);
+                    }}
+                  >
+                    Open in another window
+                  </Button>
+                  <Button
+                    className="!bg-purple-500 !text-white"
+                    onClick={() => {
+                      window.open(
+                        `https://github.com/yomorun/presencejs/blob/main/packages/group-hug-react/index.tsx`
+                      );
+                    }}
+                  >
+                    View source on Github
+                  </Button>
+                </div>
+              </Card>
             </Navbar>
           }
           header={
@@ -611,6 +641,8 @@ function Content({
   });
   const popoverRef = useRef<any>(null);
   const dark = colorScheme === "dark";
+
+  const [opened, { open, close }] = useDisclosure(true);
 
   return (
     // <LiveProvider
